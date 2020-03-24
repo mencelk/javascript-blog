@@ -4,7 +4,8 @@ const optArticleSelector = '.post',
   optTitleSelector = '.post-title',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
-  optActiveTagSelector = 'a.active[href^="#tag-"]';
+  optActiveTagSelector = 'a.active[href^="#tag-"]',
+  optArticleAuthorSelector = '.post-author';
 
 function titleClickHandler(event){
   event.preventDefault();
@@ -33,11 +34,6 @@ function generateTitleLinks(customSelector = ''){
   let html = '';
   for(let article of articles){
     const articleId = article.getAttribute('id');
-
-    /* find the title element */
-    //const titleElement = article.querySelector(optTitleSelector);
-    //console.log('title element:', titleElement);
-
     const articleTitle = article.querySelector(optTitleSelector).innerHTML;
     const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
     html = html + linkHTML;
@@ -92,3 +88,35 @@ function addClickListenersToTags(){
   }
 }
 addClickListenersToTags();
+
+function generateAutors(){
+  const articles = document.querySelectorAll(optArticleSelector);
+  for (let article of articles) {
+    const authorWrapper = article.querySelector(optArticleAuthorSelector);
+    const authorName = article.getAttribute('data-author');
+    const postAuthor = 'by ' + authorName;
+    authorWrapper.innerHTML = postAuthor;
+  }
+}
+generateAutors();
+
+function authorClickHandler(event) {
+  event.preventDefault();
+  console.log('Author was clicked.');
+  const clickedElement = this;
+  const authorName = clickedElement.querySelector('.author-name').innerHTML;
+  const activeAuthors = document.querySelectorAll('.authors a');
+  for (let activeAuthor of activeAuthors) {
+    activeAuthor.classList.remove('active');
+    clickedElement.classList.add('active');
+  }
+  generateTitleLinks('[data-author="' + authorName + '"');
+}
+
+function addClickListenersToAuthors(){
+  const authors = document.querySelectorAll('.authors a');
+  for (let author of authors) {
+    author.addEventListener('click', authorClickHandler);
+  }
+}
+addClickListenersToAuthors();
