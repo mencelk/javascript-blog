@@ -5,7 +5,9 @@ const optArticleSelector = '.post',
   optTitleListSelector = '.titles',
   optArticleTagsSelector = '.post-tags .list',
   optActiveLinkSelector = 'a.active',
-  optArticleAuthorSelector = '.post-author';
+  optArticleAuthorSelector = '.post-author',
+  optCloudClassCount = 5,
+  optCloudClassPrefix = 'tag-size-';
 
 
 function titleClickHandler(event){
@@ -28,7 +30,6 @@ function titleClickHandler(event){
 
 function generateTitleLinks(customSelector = ''){
   const titleList = document.querySelector(optTitleListSelector);
-  console.log('custom selector:', customSelector);
   titleList.innerHTML = '';
   const articles = document.querySelectorAll(optArticleSelector + customSelector);
   let html = '';
@@ -59,8 +60,16 @@ function calculateTagsParams(allTags){
   }
   params.min = min;
   params.max = max;
-  console.log('Params:', params.min, params.max);
   return params;
+}
+
+function calculateTagClass(count, params){
+  const normalizedCount = count - params.min;
+  const normalizedMax = params.max - params.min;
+  const percentage = normalizedCount / normalizedMax;
+  const classNumber = Math.floor(percentage * (optCloudClassCount - 1) + 1);
+  const tagCloudClass = optCloudClassPrefix + classNumber;
+  return tagCloudClass;
 }
 
 function generateTags(){
@@ -85,14 +94,12 @@ function generateTags(){
   }
   const tagList = document.querySelector('.tags');
   const tagsParams = calculateTagsParams(allTags);
-  console.log('Tags Params:', tagsParams);
   let allTagsHTML = '';
   for (let tag in allTags) {
-    allTagsHTML += '<li><a href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ')' + '</a></li> ' ;
+    const tagLinkHTML = calculateTagClass(allTags[tag], tagsParams);
+    allTagsHTML += '<li><a class="' + tagLinkHTML + '" href="#tag-' + tag + '">' + tag + ' (' + allTags[tag] + ')</a></li> \xa0' ;
   }
   tagList.innerHTML = allTagsHTML;
-  console.log('Tag List:', tagList);
-
   const tags = document.querySelectorAll('.tags a');
   for (let tag of tags) {
     tag.addEventListener('click', tagClickHandler);
