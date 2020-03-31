@@ -13,7 +13,6 @@ const optArticleSelector = '.post',
 function titleClickHandler(event){
   event.preventDefault();
   const clickedElement = this;
-  console.log('Link was clicked!');
   const activeLinks = document.querySelectorAll('.titles a.active');
   for(let activeLink of activeLinks){
     activeLink.classList.remove('active');
@@ -109,7 +108,6 @@ generateTags();
 
 function tagClickHandler(event){
   event.preventDefault();
-  console.log('Tag was clicked.');
   const clickedElement = this;
   const href = clickedElement.getAttribute('href');
   const tag = href.replace('#tag-', '');
@@ -145,7 +143,6 @@ generateAutors();
 
 function authorClickHandler(event) {
   event.preventDefault();
-  console.log('Author was clicked.');
   const clickedElement = this;
   const authorName = clickedElement.querySelector('.author-name').innerHTML;
   const activeAuthors = document.querySelectorAll(optActiveLinkSelector);
@@ -166,7 +163,6 @@ addClickListenersToAuthors();
 
 function clearFiltersClickHandler(event){
   event.preventDefault();
-  console.log('Clear link was clicked.');
   const clearLinks = document.querySelectorAll(optActiveLinkSelector);
   for (let clearLink of clearLinks) {
     clearLink.classList.remove('active');
