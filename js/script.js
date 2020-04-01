@@ -8,6 +8,7 @@ const opts = {
 };
 
 const select = {
+  clearLink: '.clear a',
   all: {
     articles: '.post',
     activeLinks: 'a.active',
@@ -201,7 +202,7 @@ function clearFiltersClickHandler(event){
 }
 
 function addClickListenerToClear(){
-  const clear = document.querySelector('.clear a');
+  const clear = document.querySelector(select.clearLink);
   clear.addEventListener('click', clearFiltersClickHandler);
 }
 addClickListenerToClear();
