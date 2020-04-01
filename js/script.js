@@ -130,7 +130,7 @@ function addClickListenersToTags(){
 }
 addClickListenersToTags();
 
-function generateAutors(){
+function generateAuthors(){
   let allAuthorNames = {};
   let html = '';
   const articles = document.querySelectorAll(optArticleSelector);
@@ -148,11 +148,11 @@ function generateAutors(){
   }
   const authorList = document.querySelector(optAuthorsListSelector);
   for (let authorName in allAuthorNames) {
-    html = html + '<li><a href="#"><span class="author-name">' + authorName + '</span></a> (' + allAuthorNames[authorName] + ')</li>';
+    html = html + '<li><a href="#"><span class="author-name">' + authorName + '</span> (' + allAuthorNames[authorName] + ')</a></li>';
   }
   authorList.innerHTML = html;
 }
-generateAutors();
+generateAuthors();
 
 function authorClickHandler(event) {
   event.preventDefault();
