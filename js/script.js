@@ -165,7 +165,7 @@ function generateAuthors(){
   }
   const authorList = document.querySelector(select.listOf.authors);
   for (let authorName in allAuthorNames) {
-    html = html + '<li><a href="#"><span class="author-name">' + authorName + '</span> (' + allAuthorNames[authorName] + ')</a></li>';
+    html = html + '<li><a href="#"><span class="author-name">' + authorName + '</span></a> (' + allAuthorNames[authorName] + ')</li>';
   }
   authorList.innerHTML = html;
 }
